@@ -3,4 +3,4 @@
     become: true
 
     roles:
-      - Artemu.core-heartbleed
+      - artemu.core-heartbleed
