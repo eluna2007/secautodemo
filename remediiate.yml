@@ -1,0 +1,27 @@
+---
+- name: remediate from heartbleed
+  hosts: all
+  become: no
+  gather_facts: no
+  tasks:
+    - name: reboot host
+      shell: sleep 10 && /sbin/shutdown -r now
+      async: 300
+      poll: 0
+      become: true
+
+    - name: waiting for server booting up
+      local_action: wait_for
+      args:
+        host: ''
+        port: 22
+        delay: 30
+        timeout: 600
+        state: started
+      become: false
+ 
+    - name: Check processes
+      shell: >
+        if [ "$(sudo lsof -n | grep ssl | grep DEL | wc -l)" != "0" ]; \
+        then echo "We still have affected processes"; checkrestart; \
+        exit 1; fi
