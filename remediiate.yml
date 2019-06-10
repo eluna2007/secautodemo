@@ -9,10 +9,6 @@
       async: 300
       poll: 0
       become: true
-
-    - name: waiting for server booting up
-      local_action: command ping -c 1 {{ inventory_hostname }}
-      become: false
  
     - name: Check processes
       shell: >
