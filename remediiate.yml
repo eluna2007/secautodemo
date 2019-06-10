@@ -4,7 +4,7 @@
   become: no
   gather_facts: no
   tasks:
-    - name: reboot host
+    - name: update applied and reboot host
       shell: sleep 10 && /sbin/shutdown -r now
       async: 300
       poll: 0
